@@ -1,0 +1,67 @@
+﻿create table Passenger ( Passenger_no varchar(6),
+                         Name varchar(20),
+                         Age Numeric,
+                         Address varchar(30),
+                         Gender char(1),
+                         Pincode numeric(8),
+                         state varchar(15),
+                         Concession char(3),
+                         Mobile_no Varchar(10) );
+
+create table train_master (
+ Train_no Varchar(6),
+Train_name Varchar(15),
+Train_src Varchar(5),
+Train_dest Varchar(5),
+Train_dep Time,
+Train_arrival Time );
+
+create table Station (
+              Station_code Varchar(5),
+Station_name Varchar(20),
+Metro Char(1)
+);
+
+alter table Passenger add constraint my_prikey primary key(Passenger_no);
+alter table train_master add constraint my_prmkey primary key(Train_no);
+alter table Station add constraint my_pkey primary key(Station_code);
+
+insert into Station values('LLT','Alappey','n');
+insert into Station values('TCR','thrissur','y');
+
+select * from Station;
+
+update Station set Station_name='Alapuzha' where Station_name='Alappey';
+
+insert into Passenger values('ac123','sreerekha',11,'sree nilayam, koppam, palakkad','f',678001,'kerala','yes',7070223344);
+insert into Passenger values('de244','sreelakshmi',21,'sree nilayam, koppam, palakkad','f',678001,'kerala','yes',9270223344);
+
+select * from Passenger;
+
+delete from Passenger where Mobile_no like '70%';
+
+alter table train_master add train_type varchar(10) check(train_type in('MAIL EXP','PASSENGER','SUPERFAST'));
+
+INSERT INTO train_master VALUES('5','BSL-PUNE EXP','BSL','PUNE','8:30','4:30','MAIL EXP');
+INSERT INTO train_master VALUES('11026','PUNE-BSL EXP','PUNE','BSL','5:00','11:50','MAIL EXP');
+INSERT INTO train_master VALUES('12117','GODAVARI EXP','LTT','MMR','1:30','3:30','SUPERFAST');
+INSERT INTO train_master VALUES('12118','LTT-MMR EXP','MMR','LTT','2:00','4:00','SUPERFAST');
+INSERT INTO train_master VALUES('13131','KOAA-ANVT EXP','KOAA','ANVT','4:00','8:00','MAIL EXP');
+INSERT INTO train_master VALUES('15484','SIk MAH EXP','DLI','APDJ','7:59','11:30','MAIL EXP');
+INSERT INTO train_master VALUES('22101','LTT-MMRRjrnEXP','LTT','MMR','3:40','5:30','SUPERFAST');
+INSERT INTO train_master VALUES('22102','MMR-LTTRJrNIEXP','MMR','LTT','11:30','6:50','SUPERFAST');
+INSERT INTO train_master VALUES('51153','MUM BSL PASS','CSTM','BSL','3:30','7:00','PASSENGER');
+INSERT INTO train_master VALUES('51154','BSL MUM PASS','BSL','CSTM','4:00','6:00','PASSENGER');
+
+insert into station values('MMR','MANMAD JN','N');
+insert into station values('PUNE','PUNE JN','N');
+insert into station values('LTT','LOKMANYATILAK','N');
+insert into station values('KOAA','KOLKATA','Y');
+insert into station values('ANVT','ANAND VIHAR TERMINAL','Y');
+insert into station values('DLI','DELHI','Y');
+insert into station values('APDJ','ALIPUR DUAR JN','N');
+insert into station values('CSTM','MUMBAI CST','Y');
+insert into station values('BSL','BHUSAVAL JN','N');
+
+(SELECT upper(Train_name) FROM train_master where Train_name like '%MUM%')union(SELECT upper(Train_name) FROM train_master where Train_name like '%PUNE%');
+select Train_name as Train_Name,(Train_src||'-'||Train-dest) as Source_to_Destination from Train_master;
